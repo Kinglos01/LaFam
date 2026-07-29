@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA Famiglia — Italian, Long Island</title>
+<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#1c1a17;
+    --wood:#2e2419;
+    --wood-light:#3a2e20;
+    --cream:#ede6d8;
+    --cream-dim:#c9c0ae;
+    --amber:#d89b4a;
+    --amber-soft:#e8b877;
+    --olive:#6b7449;
+    --brick:#7a3b2e;
+    --line:rgba(237,230,216,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--charcoal);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  @media(prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+    padding:22px 40px;
+    background:linear-gradient(to bottom, rgba(20,17,14,0.85), transparent);
+    transition:background .4s ease, padding .4s ease, box-shadow .4s ease;
+  }
+  nav.scrolled{
+    background:rgba(20,17,14,0.92);
+    padding:14px 40px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 var(--line);
+  }
+  .brand{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:22px;
+    color:var(--cream);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    justify-self:start;
+  }
+  .brand-logo{height:38px;width:auto;display:block;transition:opacity .25s;}
+  .brand-logo:hover{opacity:0.85;}
+  .nav-right{display:flex;align-items:center;gap:18px;justify-self:end;}
+  .nav-social{display:flex;align-items:center;gap:14px;}
+  .nav-social a{
+    color:var(--cream-dim);
+    display:flex;align-items:center;justify-content:center;
+    width:18px;height:18px;
+    transition:color .25s, transform .25s;
+  }
+  .nav-social a:hover, .nav-social a:focus-visible{color:var(--amber-soft);transform:translateY(-1px);}
+  .nav-social svg{width:100%;height:100%;}
+  .nav-directions{
+    display:flex;align-items:center;gap:6px;
+    font-size:13px;color:var(--cream-dim);letter-spacing:0.02em;white-space:nowrap;
+    transition:color .25s;
+  }
+  .nav-directions svg{width:16px;height:16px;flex-shrink:0;}
+  .nav-directions:hover, .nav-directions:focus-visible{color:var(--amber-soft);}
+  .brand .dot{color:var(--amber);font-style:normal;}
+  .nav-links{display:flex;gap:36px;font-size:14px;letter-spacing:0.02em;}
+  .nav-links a{color:var(--cream-dim);position:relative;padding:4px 0;transition:color .25s;}
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--amber-soft);}
+  .nav-cta{
+    border:1px solid var(--amber);
+    color:var(--amber-soft);
+    padding:9px 18px;
+    border-radius:2px;
+    font-size:13px;
+    letter-spacing:0.03em;
+    transition:background .25s, color .25s;
+  }
+  .nav-cta:hover, .nav-cta:focus-visible{background:var(--amber);color:var(--charcoal);}
+  .nav-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 32px 80px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 108%, rgba(216,155,74,0.35), transparent 60%),
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(58,46,32,0.6), transparent 65%),
+      var(--charcoal);
+  }
+  .hero-photo{
+    position:absolute;inset:0;
+    background-image:url('images/family-photo.png');
+    background-size:cover;
+    background-position:center 40%;
+    filter:grayscale(1) brightness(0.5) contrast(1.05);
+    opacity:0.55;
+    z-index:0;
+    pointer-events:none;
+  }
+  .ember-glow{
+    position:absolute;
+    z-index:1;
+    bottom:-20%;
+    left:50%;
+    transform:translateX(-50%);
+    width:900px;
+    height:500px;
+    background:radial-gradient(circle, rgba(216,155,74,0.28) 0%, rgba(216,155,74,0.08) 45%, transparent 70%);
+    filter:blur(10px);
+    animation:flicker 6s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes flicker{
+    0%,100%{opacity:1; transform:translateX(-50%) scale(1);}
+    50%{opacity:0.8; transform:translateX(-48%) scale(1.04);}
+  }
+  .hero-content{position:relative;z-index:2;max-width:760px;}
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--amber-soft);
+    margin-bottom:22px;
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(44px, 7vw, 82px);
+    line-height:1.02;
+    color:var(--cream);
+    margin-bottom:22px;
+  }
+  .hero h1 em{color:var(--amber-soft);font-style:italic;}
+  .hero p{
+    font-size:18px;
+    color:var(--cream-dim);
+    max-width:520px;
+    margin:0 auto 40px;
+  }
+  .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:15px 30px;
+    font-size:14px;
+    letter-spacing:0.03em;
+    border-radius:2px;
+    transition:transform .25s ease, background .25s, color .25s, border-color .25s;
+  }
+  .btn-primary{background:var(--amber);color:var(--charcoal);font-weight:600;}
+  .btn-primary:hover{transform:translateY(-2px);background:var(--amber-soft);}
+  .btn-ghost{border:1px solid rgba(237,230,216,0.3);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--amber-soft);color:var(--amber-soft);transform:translateY(-2px);}
+
+  /* ---------- OLIVE DIVIDER (signature) ---------- */
+  .divider{
+    display:flex;align-items:center;justify-content:center;
+    padding:64px 32px;
+    gap:18px;
+  }
+  .divider svg{width:120px;height:28px;color:var(--olive);flex-shrink:0;}
+  .divider .divider-line{height:1px;background:var(--line);flex:1;max-width:160px;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:20px 0 40px;}
+  .section-head{text-align:center;max-width:600px;margin:0 auto 56px;}
+  .section-head .eyebrow{color:var(--olive);}
+  .section-head h2{font-size:clamp(32px,4.5vw,46px);color:var(--cream);}
+  .section-head p{color:var(--cream-dim);font-size:16px;margin-top:14px;}
+
+  /* ---------- ABOUT ---------- */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:40px 0 100px;}
+  .about-img{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;filter:saturate(0.9) brightness(0.92);}
+  .about-text .eyebrow{color:var(--olive);}
+  .about-text h2{font-size:clamp(30px,4vw,42px);margin-bottom:20px;color:var(--cream);}
+  .about-text p{color:var(--cream-dim);margin-bottom:16px;font-size:16px;}
+  .about-stats{display:flex;gap:40px;margin-top:32px;}
+  .stat-num{font-family:'Fraunces',serif;font-size:32px;color:var(--amber-soft);}
+  .stat-label{font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--cream-dim);margin-top:4px;}
+
+  /* ---------- MENU ---------- */
+  .menu-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:48px;flex-wrap:wrap;}
+  .menu-tab{
+    padding:10px 20px;font-size:13px;letter-spacing:0.03em;
+    border:1px solid var(--line);border-radius:20px;color:var(--cream-dim);
+    background:transparent;cursor:pointer;transition:all .25s;
+    font-family:'Inter',sans-serif;
+  }
+  .menu-tab.active, .menu-tab:hover{border-color:var(--amber);color:var(--amber-soft);}
+  .menu-grid{display:none;grid-template-columns:1fr 1fr;gap:20px 56px;max-width:920px;margin:0 auto;}
+  .menu-grid.active{display:grid;}
+  .menu-item{padding:20px 0;border-bottom:1px dashed var(--line);}
+  .menu-item-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;}
+  .menu-item-top h3{font-size:19px;color:var(--cream);font-weight:500;}
+  .menu-price{color:var(--amber-soft);font-family:'Fraunces',serif;font-size:17px;white-space:nowrap;}
+  .menu-item p{color:var(--cream-dim);font-size:14px;margin-top:6px;max-width:380px;}
+  .menu-subhead{
+    grid-column:1 / -1;
+    display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    margin-top:8px;padding-bottom:10px;border-bottom:1px solid var(--amber);
+  }
+  .menu-subhead:first-child{margin-top:0;}
+  .menu-subhead h3{font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--amber-soft);font-weight:500;font-family:'Inter',sans-serif;}
+  .menu-subhead span{font-size:13px;color:var(--cream-dim);font-style:italic;}
+  .menu-note{
+    grid-column:1 / -1;font-size:13px;color:var(--cream-dim);font-style:italic;
+    padding:10px 16px;border:1px dashed var(--line);border-radius:3px;margin-bottom:8px;
+  }
+  .menu-footnote{
+    grid-column:1 / -1;font-size:12px;color:var(--cream-dim);opacity:0.7;margin-top:16px;
+  }
+  .lunch-banner{
+    grid-column:1 / -1;
+    display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;
+    background:var(--wood);border:1px solid var(--amber);border-radius:4px;
+    padding:16px 22px;margin-bottom:12px;
+  }
+  .lunch-banner svg{width:19px;height:19px;color:var(--amber-soft);flex-shrink:0;}
+  .lunch-banner strong{font-family:'Fraunces',serif;font-size:18px;color:var(--cream);font-weight:500;}
+  .lunch-banner span{font-size:13px;color:var(--amber-soft);letter-spacing:0.03em;text-transform:uppercase;}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:180px;
+    grid-auto-flow:dense;
+    gap:14px;
+  }
+  .gallery img{width:100%;height:100%;object-fit:cover;border-radius:3px;filter:saturate(0.92) brightness(0.9);transition:transform .5s ease, filter .5s ease;}
+  .gallery a{overflow:hidden;border-radius:3px;display:block;}
+  .gallery a:hover img{transform:scale(1.06);filter:saturate(1) brightness(1);}
+  .gallery .g-tall{grid-column:span 2;grid-row:span 2;}
+  .gallery .g-wide{grid-column:span 2;}
+  .gallery .g-small{grid-column:span 1;grid-row:span 1;}
+
+  /* ---------- VIDEO ---------- */
+  .gallery-video{margin-top:40px;}
+  .gallery-video h3{
+    font-size:14px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--olive);margin-bottom:16px;text-align:center;font-family:'Inter',sans-serif;font-weight:500;
+  }
+  .video-embed{
+    position:relative;width:100%;aspect-ratio:16/9;
+    border-radius:6px;overflow:hidden;border:1px solid var(--line);
+    background:var(--wood);
+  }
+  .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+
+  /* ---------- MAP ---------- */
+  .map-wrap{margin-top:24px;}
+  .map-embed{
+    position:relative;width:100%;aspect-ratio:16/7;
+    border-radius:6px;overflow:hidden;border:1px solid var(--line);
+    filter:grayscale(0.3) contrast(1.05);
+  }
+  .map-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .map-directions{
+    display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+    font-size:13px;color:var(--amber-soft);letter-spacing:0.02em;
+  }
+  .map-directions:hover{color:var(--amber);}
+
+  /* ---------- RESERVATIONS ---------- */
+  .reserve-wrap{
+    background:var(--wood);
+    border-radius:6px;
+    padding:64px;
+    display:grid;
+    grid-template-columns:1fr 1.1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .reserve-info .eyebrow{color:var(--amber-soft);}
+  .reserve-info h2{font-size:clamp(28px,3.6vw,38px);margin-bottom:16px;color:var(--cream);}
+  .reserve-info p{color:var(--cream-dim);margin-bottom:24px;}
+  .reserve-detail{display:flex;gap:14px;margin-bottom:14px;font-size:14px;color:var(--cream-dim);}
+  .reserve-detail strong{color:var(--cream);min-width:90px;display:inline-block;font-weight:500;}
+  form{display:grid;gap:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  label{display:block;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:8px;}
+  input, select, textarea{
+    width:100%;background:var(--charcoal);border:1px solid var(--line);
+    color:var(--cream);padding:13px 14px;border-radius:3px;font-family:'Inter',sans-serif;font-size:14px;
+    transition:border-color .25s;
+  }
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--amber);}
+  textarea{resize:vertical;min-height:70px;}
+  .submit-btn{
+    background:var(--amber);color:var(--charcoal);border:none;padding:15px;
+    font-size:14px;font-weight:600;letter-spacing:0.03em;border-radius:3px;cursor:pointer;
+    transition:background .25s, transform .25s;
+  }
+  .submit-btn:hover{background:var(--amber-soft);transform:translateY(-1px);}
+  .form-msg{font-size:13px;color:var(--amber-soft);min-height:18px;margin-top:-4px;}
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer{padding:90px 0 40px;}
+  .footer-newsletter{padding-bottom:48px;margin-bottom:48px;border-bottom:1px solid var(--line);}
+  .newsletter-row{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;}
+  .newsletter-text{max-width:380px;}
+  .newsletter-text h3{font-size:22px;color:var(--cream);margin-bottom:6px;}
+  .newsletter-text p{color:var(--cream-dim);font-size:14px;}
+  .newsletter-form{display:flex;gap:10px;flex-wrap:wrap;flex:1;min-width:280px;max-width:560px;}
+  .newsletter-form input{
+    flex:1;min-width:130px;background:var(--charcoal);border:1px solid var(--line);
+    color:var(--cream);padding:12px 14px;border-radius:3px;font-size:14px;font-family:'Inter',sans-serif;
+    transition:border-color .25s;
+  }
+  .newsletter-form input:focus{outline:none;border-color:var(--amber);}
+  .newsletter-form button{
+    background:var(--amber);color:var(--charcoal);border:none;padding:12px 22px;
+    font-weight:600;font-size:13px;letter-spacing:0.02em;border-radius:3px;cursor:pointer;
+    white-space:nowrap;transition:background .25s, transform .25s;
+  }
+  .newsletter-form button:hover{background:var(--amber-soft);transform:translateY(-1px);}
+  .newsletter-msg{font-size:13px;color:var(--amber-soft);margin-top:14px;min-height:16px;}
+  .footer-contact{padding-bottom:48px;margin-bottom:48px;border-bottom:1px solid var(--line);}
+  .footer-contact-head{max-width:520px;margin:0 auto 28px;text-align:center;}
+  .footer-contact-head .eyebrow{color:var(--olive);}
+  .footer-contact-head h3{font-family:'Fraunces',serif;font-size:26px;color:var(--cream);margin:8px 0 14px;font-weight:500;}
+  .contact-warning{
+    font-size:13px;color:var(--cream-dim);background:var(--wood);border:1px solid var(--line);
+    border-radius:3px;padding:10px 16px;display:inline-block;
+  }
+  .contact-warning a{color:var(--amber-soft);}
+  .contact-form{max-width:640px;margin:0 auto;display:grid;gap:16px;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:48px;padding-bottom:56px;border-bottom:1px solid var(--line);}
+  .footer-brand{font-family:'Fraunces',serif;font-style:italic;font-size:26px;margin-bottom:14px;}
+  .footer-brand .dot{color:var(--amber);font-style:normal;}
+  .footer-grid p{color:var(--cream-dim);font-size:14px;max-width:280px;}
+  .footer-col h4{font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:16px;}
+  .footer-col a, .footer-col p{display:block;color:var(--cream-dim);font-size:14px;margin-bottom:10px;transition:color .25s;}
+  .footer-col a:hover{color:var(--amber-soft);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;font-size:13px;color:rgba(201,192,174,0.6);flex-wrap:wrap;gap:12px;}
+  .social{display:flex;gap:16px;align-items:center;}
+  .social a{color:var(--cream-dim);display:flex;transition:color .25s, transform .25s;margin:0;}
+  .social a:hover{color:var(--amber-soft);transform:translateY(-1px);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:860px){
+    .nav-links{display:none;}
+    .brand-logo{height:30px;}
+    .nav-right{gap:14px;}
+    .nav-directions span{display:none;}
+    .about{grid-template-columns:1fr;}
+    .about-img{order:-1;}
+    .menu-grid{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .gallery .g-tall{grid-column:span 2;}
+    .gallery .g-wide{grid-column:span 2;}
+    .reserve-wrap{grid-template-columns:1fr;padding:40px 24px;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .newsletter-row{flex-direction:column;align-items:stretch;}
+    .newsletter-form{max-width:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#home" class="brand"><img src="images/FamLogo.png" alt="La Famiglia Italian Kitchen & Bar" class="brand-logo"></a>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="https://www.instagram.com/lafamigliasmithtown/?hl=en" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/discover/la-famiglia-smithtown" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c0 2.5 2 4.5 4.5 4.5"/></svg>
+      </a>
+    </div>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=250+West+Main+Street,+Smithtown,+NY+11787" class="nav-directions" target="_blank" rel="noopener noreferrer" aria-label="Get Directions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
+      <span>Get Directions</span>
+    </a>
+    <a href="#reservations" class="nav-cta">Reserve a Table</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-photo"></div>
+  <div class="ember-glow"></div>
+  <div class="hero-content">
+    <span class="eyebrow"> Italian &middot; Long Island, NY</span>
+    <h1>Delicious food <em>prepared,</em> the way home is.</h1>
+    <p>An inviting staff, a verbous menu, and a room that feels like someone's grandfather still runs the kitchen. Because he does.</p>
+    <div class="hero-actions">
+      <a href="#reservations" class="btn btn-primary">Reserve a Table</a>
+      <a href="#menu" class="btn btn-ghost">View the Menu</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 20C20 8 40 6 60 14C80 22 100 6 118 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <ellipse cx="18" cy="12" rx="5" ry="3" transform="rotate(-25 18 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="34" cy="8" rx="5" ry="3" transform="rotate(-10 34 8)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="52" cy="12" rx="5" ry="3" transform="rotate(10 52 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="70" cy="19" rx="5" ry="3" transform="rotate(25 70 19)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="88" cy="13" rx="5" ry="3" transform="rotate(5 88 13)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="104" cy="9" rx="5" ry="3" transform="rotate(-15 104 9)" fill="currentColor" opacity="0.85"/>
+  </svg>
+  <div class="divider-line"></div>
+</div>
+
+<section id="about">
+  <div class="wrap about">
+    <div class="about-img" href = #home>
+      <img src="images\WestDiningRoom.jpg" alt="Chef preparing wood-fired dishes in the kitchen">
+    </div>
+    <div class="about-text">
+      <span class="eyebrow">Our Story</span>
+      <h2>"I came to buy a house, and I bought a resturant!"</h2>
+      <p>LA famiglia began as three brothers getting into the world of resturants just like their father.  Keeping that classic home cooked feel while aslo creating five star quality meals.  All of our food is family style feeding whole families just like how our father would.</p>
+      <p>We cook the way our father did: Everything made to order, treated properly, served without ceremony. Everything comes from our kitchen freshly made without question.</p>
+      <div class="about-stats">
+        <div><div class="stat-num">20+</div><div class="stat-label">Years Open</div></div>
+        <div><div class="stat-num">1,000's</div><div class="stat-label">Satisfied</div></div>
+        <div><div class="stat-num">1</div><div class="stat-label">Family Recipe Book</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 20C20 8 40 6 60 14C80 22 100 6 118 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <ellipse cx="18" cy="12" rx="5" ry="3" transform="rotate(-25 18 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="34" cy="8" rx="5" ry="3" transform="rotate(-10 34 8)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="52" cy="12" rx="5" ry="3" transform="rotate(10 52 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="70" cy="19" rx="5" ry="3" transform="rotate(25 70 19)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="88" cy="13" rx="5" ry="3" transform="rotate(5 88 13)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="104" cy="9" rx="5" ry="3" transform="rotate(-15 104 9)" fill="currentColor" opacity="0.85"/>
+  </svg>
+  <div class="divider-line"></div>
+</div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The Menu</span>
+      <h2>Cooked fresh,<br>every single night.</h2>
+    </div>
+
+    <div class="menu-tabs" role="tablist">
+      <button class="menu-tab active" data-tab="appetizers">Appetizers</button>
+      <button class="menu-tab" data-tab="salads">Salads</button>
+      <button class="menu-tab" data-tab="pasta">Pasta</button>
+      <button class="menu-tab" data-tab="entrees">Entrees</button>
+      <button class="menu-tab" data-tab="sides">Sides</button>
+      <button class="menu-tab" data-tab="lunch">Lunch Specials</button>
+      <button class="menu-tab" data-tab="catering">Catering</button>
+    </div>
+
+    <div class="menu-grid active" id="appetizers">
+      <div class="menu-item"><div class="menu-item-top"><h3>Mozzarella, Tomato & Roasted Peppers</h3><span class="menu-price">Sm $18 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Garlic Bread</h3><span class="menu-price">12pc $10 / 18pc $15</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Cold Antipasto</h3><span class="menu-price">Sm $23 / Lg $32</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Bruschetta</h3><span class="menu-price">Sm $13 / Lg $22</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Eggplant Rollatini</h3><span class="menu-price">Sm $17 / Lg $29</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Homemade Mozzarella Sticks</h3><span class="menu-price">Sm $18 / Lg $30</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Italian Egg Rolls</h3><span class="menu-price">Sm $19 / Lg $31</span></div><p>Stuffed with broccoli rabe, crumbled sausage & ricotta.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Homemade Meatballs w/Ricotta</h3><span class="menu-price">Sm $18 / Lg $29</span></div></div>
+
+      <div class="menu-subhead"><h3>Fried Calamari</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Classic</h3><span class="menu-price">Sm $22 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>La Famiglia Style</h3><span class="menu-price">Sm $24 / Lg $38</span></div></div>
+
+      <div class="menu-subhead"><h3>From the Sea</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Fried Zucchini</h3><span class="menu-price">Sm $18 / Lg $27</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Stuffed Mushrooms</h3><span class="menu-price">Sm $17 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Baked Clams</h3><span class="menu-price">Sm $18 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Zuppa Di Mussels (Red/White)</h3><span class="menu-price">Sm $17 / Lg $29</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Mussels Cognac</h3><span class="menu-price">Sm $17 / Lg $32</span></div><p>Sautéed in a cognac cream reduction.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Zuppa Di Clams (Red/White)</h3><span class="menu-price">Sm $18 / Lg $29</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Baby Shrimp Giovanni</h3><span class="menu-price">$38</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>*Clams on the Half Shell</h3><span class="menu-price">Sm $18 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp Cocktail</h3><span class="menu-price">$32</span></div></div>
+    </div>
+
+    <div class="menu-grid" id="salads">
+      <div class="menu-item"><div class="menu-item-top"><h3>La Famiglia Salad</h3><span class="menu-price">Sm $17 / Lg $27</span></div><p>Chopped iceberg lettuce, chopped tomatoes, red onion, cucumbers, roasted peppers, olives, chickpeas and mushrooms in a house vinaigrette.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Tri-Color Salad</h3><span class="menu-price">Sm $16 / Lg $26</span></div><p>Arugula, radicchio and endives tossed in a house vinaigrette.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Italian Salad</h3><span class="menu-price">Sm $22 / Lg $33</span></div><p>Our famous house salad topped with fried calamari, fried artichoke hearts and crumbled gorgonzola cheese.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Mesclun Salad</h3><span class="menu-price">Sm $19 / Lg $28</span></div><p>Fresh spring mix topped with dried cranberries, candied walnuts, red onions, goat cheese and sweetened mandarin oranges in a raspberry vinaigrette.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Giovanni Salad</h3><span class="menu-price">Sm $23 / Lg $32</span></div><p>Our famous chopped antipasto salad.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Caesar Salad</h3><span class="menu-price">Sm $17 / Lg $28</span></div><p>Our famous homemade caesar salad dressing.</p></div>
+    </div>
+
+    <div class="menu-grid" id="pasta">
+      <div class="menu-note">Penne, rigatoni, linguine, spaghetti or cappellini. Fresh pasta (gnocchi, fettucine, cavatelli, tortellini, cheese ravioli) add $5. Whole wheat & gluten free pasta add $4.</div>
+
+      <div class="menu-subhead"><h3>Classic Sauces</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Clam Sauce (Red/White)</h3><span class="menu-price">Sm $23 / Lg $33</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Marinara Sauce</h3><span class="menu-price">Sm $18 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Tomato Sauce</h3><span class="menu-price">Sm $18 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Filetto Di Pomodoro</h3><span class="menu-price">Sm $18 / Lg $28</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Pesto Sauce</h3><span class="menu-price">Sm $19 / Lg $30</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Alfredo Sauce</h3><span class="menu-price">Sm $19 / Lg $30</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Zucchini Medallions</h3><span class="menu-price">Sm $18 / Lg $29</span></div><p>Zucchini slices pan fried in garlic & oil with grated parmigiano cheese.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Bolognese Sauce</h3><span class="menu-price">Sm $21 / Lg $32</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Broccoli Garlic and Oil</h3><span class="menu-price">Sm $18 / Lg $29</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Alla Vodka with Prosciutto</h3><span class="menu-price">Sm $21 / Lg $31</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Homemade Meatballs</h3><span class="menu-price">Sm $18 / Lg $32</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Zucchini Linguine</h3><span class="menu-price">Sm $19 / Lg $30</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Baked Ziti</h3><span class="menu-price">Sm $20 / Lg $32</span></div></div>
+
+      <div class="menu-subhead"><h3>Signature Pasta Dishes</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Rigatoni La Famiglia</h3><span class="menu-price">Sm $24 / Lg $35</span></div><p>Homemade crumbled sweet sausage with broccoli rabe and sun dried tomatoes in a garlic and oil sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Carbonara</h3><span class="menu-price">Sm $22 / Lg $33</span></div><p>Diced caramelized onions and bacon in a cream sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Spaghetti Cacio e Pepe</h3><span class="menu-price">Sm $24 / Lg $34</span></div><p>Crushed black pepper, extra virgin olive oil and shaved reggiano cheese.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Penne Siciliana</h3><span class="menu-price">Sm $23 / Lg $32</span></div><p>Sausage and eggplant in a spicy marinara sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Tortellini Mamma Mia</h3><span class="menu-price">Sm $24 / Lg $35</span></div><p>Baby shrimp, sweet peas & mushrooms in a light pink brandy cream sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Linguine Seafood Combo</h3><span class="menu-price">Sm $26 / Lg $39</span></div><p>Calamari, clams, mussels & jumbo shrimp in a red or white sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>1 lb. Scungilli</h3><span class="menu-price">$48</span></div><p>Marinara or fra diavolo.</p></div>
+    </div>
+
+    <div class="menu-grid" id="entrees">
+      <div class="menu-subhead"><h3>Chicken</h3><span>Piccata &middot; Marsala &middot; Pizzaiola &middot; Francese &mdash; Sm $22 / Lg $33</span></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Chicken Parmigiana</h3><span class="menu-price">Sm $22 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Chicken Sorrentino</h3><span class="menu-price">Sm $23 / Lg $36</span></div><p>Topped with prosciutto, eggplant and melted mozzarella in a light brown sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Chicken San Marino</h3><span class="menu-price">Sm $23 / Lg $34</span></div><p>Sautéed chicken, artichokes and sundried tomato in a gorgonzola and cognac cream reduction.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Sweet and Sour Chicken</h3><span class="menu-price">$40</span></div><p>Boneless chicken with sweet peppers, cherry peppers, broccoli & sliced sausage in a balsamic reduction.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Chicken La Famiglia</h3><span class="menu-price">$42</span></div><p>On the bone with onions, potatoes, sausage, peppers and mushrooms.</p></div>
+
+      <div class="menu-subhead"><h3>Veal</h3><span>Piccata &middot; Marsala &middot; Pizzaiola &middot; Francese &mdash; Sm $24 / Lg $34</span></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Veal Parmigiana</h3><span class="menu-price">Sm $26 / Lg $36</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Veal Rosario</h3><span class="menu-price">Sm $27 / Lg $39</span></div><p>With prosciutto, roasted peppers in a brown sauce with melted mozzarella.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Veal Capricciosa</h3><span class="menu-price">Sm $24 / Lg $33</span></div><p>Veal cutlet topped with chopped tomatoes, onions, garlic, grated parmigiano cheese & fresh basil.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>*Grilled Veal Chop</h3><span class="menu-price">$60</span></div></div>
+
+      <div class="menu-subhead"><h3>From the Land</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Eggplant Parmigiana</h3><span class="menu-price">Sm $23 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>*T-Bone Steak</h3><span class="menu-price">$110</span></div><p>Double cut.</p></div>
+      <div class="menu-note">*Gluten free options available &mdash; ask your server.</div>
+
+      <div class="menu-subhead"><h3>Seafood</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp La Famiglia</h3><span class="menu-price">Sm $24 / Lg $34</span></div><p>Breaded and baked with mushrooms and melted mozzarella in a brown sauce.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp Wrapped in Bacon</h3><span class="menu-price">Sm $24 / Lg $34</span></div><p>Served in a dijon mustard reduction.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp Scampi</h3><span class="menu-price">Sm $24 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp Oreganata</h3><span class="menu-price">Sm $24 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp Parmigiana</h3><span class="menu-price">Sm $26 / Lg $35</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Shrimp Marinara</h3><span class="menu-price">Sm $24 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Calamari Fra Diavolo</h3><span class="menu-price">Sm $22 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Fillet Sole Bassa Oreganata</h3><span class="menu-price">Sm $24 / Lg $34</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Salmon (any style)</h3><span class="menu-price">Sm $24 / Lg $42</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Red Snapper (any style)</h3><span class="menu-price">$39</span></div></div>
+
+      <div class="menu-note">Featured Wine &mdash; Hampton Water Rosé by Bon Jovi: Glass $14 / Bottle $45</div>
+      <div class="menu-footnote">*Consuming raw or undercooked meat, fish, shellfish or fresh shell eggs may increase your risk of foodborne illness, especially if you have certain medical conditions.</div>
+    </div>
+
+    <div class="menu-grid" id="sides">
+      <div class="menu-item"><div class="menu-item-top"><h3>Broccoli or Spinach with Garlic & Oil</h3><span class="menu-price">$14</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Escarole and Beans</h3><span class="menu-price">$17</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Sausage (3 pieces)</h3><span class="menu-price">$14</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Broccoli Rabe</h3><span class="menu-price">$18</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>French Fries</h3><span class="menu-price">$13</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Rice</h3><span class="menu-price">$13</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Sautéed Mushrooms</h3><span class="menu-price">$13</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>La Famiglia Roasted Potatoes</h3><span class="menu-price">$15</span></div></div>
+    </div>
+
+    <div class="menu-grid" id="lunch">
+      <div class="lunch-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        <div><strong>Lunch Specials</strong> &nbsp; <span>Tuesday &ndash; Friday &middot; 12:00pm &ndash; 3:00pm</span></div>
+      </div>
+      <div class="menu-note">Choose one Appetizer or Salad, then choose one Entrée (pasta or a plated dish below).</div>
+
+      <div class="menu-subhead"><h3>Step 1 &mdash; Appetizers</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Bruschetta</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Mozzarella, Tomato & Roasted Peppers</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Italian Egg Rolls</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Homemade Meatballs w/Ricotta</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Fried Zucchini</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Stuffed Mushrooms</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Baked Clams</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Zuppa Di Mussels (Red/White)</h3></div></div>
+
+      <div class="menu-subhead"><h3>Step 1 &mdash; Salads</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Mesclun Salad</h3></div><p>Fresh spring mix topped with dried cranberries, candied walnuts, red onions, goat cheese and sweetened mandarin oranges in a raspberry vinaigrette.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>La Famiglia Salad</h3></div><p>Chopped iceberg lettuce, chopped tomatoes, red onion, cucumbers, roasted peppers, olives, chickpeas and mushrooms in a house vinaigrette.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Caesar Salad</h3></div><p>Our famous homemade caesar salad dressing.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Tri-Color Salad</h3></div><p>Arugula, radicchio and endives tossed in a house vinaigrette.</p></div>
+
+      <div class="menu-subhead"><h3>Step 2 &mdash; Pasta Campagnola</h3><span>Choice of sauce</span></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Marinara Sauce</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Tomato Sauce</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Bolognese Sauce</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Broccoli Garlic and Oil</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Filetto Di Pomodoro</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Vodka Sauce</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Pesto Sauce</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Alfredo Sauce</h3></div></div>
+
+      <div class="menu-subhead"><h3>Step 2 &mdash; Entrées</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Veal Parmigiana</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Veal Capricciosa</h3></div><p>Veal cutlet topped with chopped tomatoes, onions, garlic, grated parmigiano cheese & fresh basil.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Chicken Parmigiana</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Fillet Sole Bassa Oreganata</h3></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Eggplant Parmigiana</h3></div></div>
+
+      <div class="menu-subhead"><h3>Other Lunch Options</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Any Salad w/ Chicken, Shrimp or Salmon</h3><span class="menu-price">$13.95</span></div></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>La Famiglia Sandwich</h3><span class="menu-price">$13.95</span></div><p>Broccoli rabe, grilled chicken with fresh mozzarella.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Salmon Panini</h3><span class="menu-price">$14.95</span></div><p>Salmon, sliced tomato, arugula, dijon dressing.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Chicken Parmigiana Sandwich</h3><span class="menu-price">$13.95</span></div></div>
+    </div>
+
+    <div class="menu-grid" id="catering">
+      <div class="lunch-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3v7a2 2 0 0 0 2 2v9"/><path d="M6 3v7"/><path d="M9 3v7"/><path d="M17 3c-1.5 1.5-2 3-2 5s1 3.5 2 5v8"/></svg>
+        <div><strong>Catering & Private Parties</strong></div>
+      </div>
+      <div class="menu-note">La Famiglia specializes in family-style parties. All food is individually cooked to order for you and your guests, and a private dining room is available.</div>
+      <div class="menu-note">We welcome engagement parties, rehearsal dinners, showers, communions, confirmations, special birthdays, sweet 16 parties, small wedding receptions, family reunions, and corporate parties.</div>
+
+      <div class="menu-subhead"><h3>On Premise &mdash; Sit-Down Style</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Choice of Salad</h3></div><p>House or Caesar.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Choice of Pasta</h3></div><p>Vodka, Filetto di Pomodoro, or other.</p></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Choice of Entrée</h3></div><p>Veal, chicken, eggplant, & fish. Served with vegetable & potato.</p></div>
+      <div class="menu-note">Coffee, beer, wine, soda, and liquor packages available.</div>
+
+      <div class="menu-subhead"><h3>On Premise &mdash; Buffet Style</h3></div>
+      <div class="menu-item"><div class="menu-item-top"><h3>Buffet Menu</h3></div><p>Salad, two types of pasta, chicken, veal, eggplant, & fish. Coffee included.</p></div>
+      <div class="menu-note">All food is continuously refilled until everyone is done eating.</div>
+
+      <div class="menu-subhead"><h3>Family Style</h3></div>
+      <div class="menu-note">We can accommodate family style for any size party and any dish from our menu. Come in and we'll go over the entire menu with you to build your custom order.</div>
+
+      <div class="menu-subhead"><h3>Off-Premises</h3></div>
+      <div class="menu-note">No party too big or too small — delivery available. We customize your package to meet your food and budget needs.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 20C20 8 40 6 60 14C80 22 100 6 118 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <ellipse cx="18" cy="12" rx="5" ry="3" transform="rotate(-25 18 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="34" cy="8" rx="5" ry="3" transform="rotate(-10 34 8)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="52" cy="12" rx="5" ry="3" transform="rotate(10 52 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="70" cy="19" rx="5" ry="3" transform="rotate(25 70 19)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="88" cy="13" rx="5" ry="3" transform="rotate(5 88 13)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="104" cy="9" rx="5" ry="3" transform="rotate(-15 104 9)" fill="currentColor" opacity="0.85"/>
+  </svg>
+  <div class="divider-line"></div>
+</div>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">A Look Inside</span>
+      <h2>The room, the table.</h2>
+    </div>
+    <div class="gallery">
+      <a class="g-tall" href="images/EastSideDiningRoom.jpg" target="_blank" rel="noopener"><img src="images/EastSideDiningRoom.jpg" alt="East side dining room with chandelier and set tables"></a>
+      <a class="g-tall" href="images/chef1.jpg" target="_blank" rel="noopener"><img src="images/chef1.jpg" alt="Kitchen flame and simmering pots of sauce"></a>
+      <a class="g-tall" href="images/outside.jpg" target="_blank" rel="noopener"><img src="images/outside.jpg" alt="West dining room with mirrored wall art and booth seating"></a>
+      <a class="g-tall" href="images/chef2.jpg" target="_blank" rel="noopener"><img src="images/chef2.jpg" alt="Chicken and peppers flambéed tableside in the kitchen"></a>
+      <a class="g-small" href="images/chef3.jpg" target="_blank" rel="noopener"><img src="images/chef3.jpg" alt="Mussels simmering in tomato broth"></a>
+      <a class="g-small" href="images/chef4.jpg" target="_blank" rel="noopener"><img src="images/chef4.jpg" alt="Fresh spaghetti tossed in the pan"></a>
+      <a class="g-small" href="images/chef5.jpg" target="_blank" rel="noopener"><img src="images/chef5.jpg" alt="Cream poured into a flambéed pan"></a>
+      <a class="g-small" href="images/chef6.jpg" target="_blank" rel="noopener"><img src="images/chef6.jpg" alt="Pesto spaghetti tossed and pulled from the pan"></a>
+    </div>
+
+    <div class="gallery-video">
+      <h3>Watch</h3>
+      <div class="video-embed">
+        <!-- Replace YOUR_VIDEO_ID below with your actual YouTube video ID -->
+        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="La Famiglia video" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 20C20 8 40 6 60 14C80 22 100 6 118 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <ellipse cx="18" cy="12" rx="5" ry="3" transform="rotate(-25 18 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="34" cy="8" rx="5" ry="3" transform="rotate(-10 34 8)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="52" cy="12" rx="5" ry="3" transform="rotate(10 52 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="70" cy="19" rx="5" ry="3" transform="rotate(25 70 19)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="88" cy="13" rx="5" ry="3" transform="rotate(5 88 13)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="104" cy="9" rx="5" ry="3" transform="rotate(-15 104 9)" fill="currentColor" opacity="0.85"/>
+  </svg>
+  <div class="divider-line"></div>
+</div>
+
+<section id="reservations">
+  <div class="wrap">
+    <div class="reserve-wrap">
+      <div class="reserve-info">
+        <span class="eyebrow">Reservations</span>
+        <h2>Save a seat.</h2>
+        <p>Tables move quickly on weekends. We hold reservations for 15 minutes past the booked time.</p>
+        <div class="reserve-detail"><strong>Hours</strong> Tue–Sun, 11am–10pm. Closed Mondays.</div>
+        <div class="reserve-detail"><strong>Parties 8+</strong> Call us directly at (631)382-9454.</div>
+        <div class="reserve-detail"><strong>Address</strong> 250 West Main Street, NY 11787</div>
+      </div>
+      <form id="reserveForm">
+        <div class="form-row">
+          <div>
+            <label for="name">Full name</label>
+            <input type="text" id="name" required placeholder="Jane Rossi">
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" required placeholder="(555) 123-4567">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="date">Date</label>
+            <input type="date" id="date" required>
+          </div>
+          <div>
+            <label for="time">Time</label>
+            <select id="time" required>
+              <option value="">Select time</option>
+              <option>5:00 PM</option><option>5:30 PM</option><option>6:00 PM</option>
+              <option>6:30 PM</option><option>7:00 PM</option><option>7:30 PM</option>
+              <option>8:00 PM</option><option>8:30 PM</option><option>9:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="party">Party size</label>
+            <select id="party" required>
+              <option value="">Select size</option>
+              <option>1 guest</option><option>2 guests</option><option>3 guests</option>
+              <option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7 guests</option>
+            </select>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="jane@email.com">
+          </div>
+        </div>
+        <div>
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" placeholder="Allergies, special occasions, seating preference…"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Request Reservation</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+
+    <div class="map-wrap">
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps?q=250+West+Main+Street,+Smithtown,+NY+11787&output=embed"
+          title="Map to La Famiglia Italian Kitchen & Bar"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <a class="map-directions" href="https://www.google.com/maps/dir/?api=1&destination=250+West+Main+Street,+Smithtown,+NY+11787" target="_blank" rel="noopener noreferrer">
+        Get Directions &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <svg viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 20C20 8 40 6 60 14C80 22 100 6 118 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <ellipse cx="18" cy="12" rx="5" ry="3" transform="rotate(-25 18 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="34" cy="8" rx="5" ry="3" transform="rotate(-10 34 8)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="52" cy="12" rx="5" ry="3" transform="rotate(10 52 12)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="70" cy="19" rx="5" ry="3" transform="rotate(25 70 19)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="88" cy="13" rx="5" ry="3" transform="rotate(5 88 13)" fill="currentColor" opacity="0.85"/>
+    <ellipse cx="104" cy="9" rx="5" ry="3" transform="rotate(-15 104 9)" fill="currentColor" opacity="0.85"/>
+  </svg>
+  <div class="divider-line"></div>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-newsletter">
+      <div class="newsletter-row">
+        <div class="newsletter-text">
+          <h3>Join the List</h3>
+          <p>First taste of new menus, events, and specials — straight to your inbox.</p>
+        </div>
+        <form id="newsletterForm" class="newsletter-form">
+          <input type="text" id="nl-first" placeholder="First name" required>
+          <input type="text" id="nl-last" placeholder="Last name" required>
+          <input type="email" id="nl-email" placeholder="Email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="newsletter-msg" id="newsletterMsg"></div>
+    </div>
+
+    <div class="footer-contact">
+      <div class="footer-contact-head">
+        <span class="eyebrow">Contact Us</span>
+        <h3>Send Us a Message</h3>
+        <p class="contact-warning">Please note: email is not checked daily. For anything time-sensitive, call us directly at <a href="tel:6315550148">(631) 382-9454</a>.</p>
+      </div>
+      <form id="contactForm" class="contact-form">
+        <div class="form-row">
+          <div>
+            <label for="c-name">Full name</label>
+            <input type="text" id="c-name" required placeholder="Jane Rossi">
+          </div>
+          <div>
+            <label for="c-phone">Phone</label>
+            <input type="tel" id="c-phone" required placeholder="(555) 123-4567">
+          </div>
+        </div>
+        <div>
+          <label for="c-email">Email</label>
+          <input type="email" id="c-email" required placeholder="jane@email.com">
+        </div>
+        <div>
+          <label for="c-message">Message</label>
+          <textarea id="c-message" required placeholder="How can we help?"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+        <div class="form-msg" id="contactMsg"></div>
+      </form>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">La Faminglia</div>
+        <p>Italian on Long Island's north shore. Family-run since day one, cooked to order every night.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <p>250 West Main Street<br>Smithtown , NY 11787</p>
+        <a href="tel:6315550148">(631)382-9454</a>
+        <a href="mailto:hello@fornoandvine.com">LaFam@gmail.com</a>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <p>Tue–Sun: 11am–10pm</p>
+        <p>Mon: Closed</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 La Famiglia Italian Kitchen & Bar. All rights reserved.</span>
+      <div class="social">
+        <a href="https://www.instagram.com/lafamigliasmithtown/?hl=en" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/discover/la-famiglia-smithtown" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M14 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c0 2.5 2 4.5 4.5 4.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav background on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Menu tabs
+  const tabs = document.querySelectorAll('.menu-tab');
+  const grids = document.querySelectorAll('.menu-grid');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      grids.forEach(g => g.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Reservation form (front-end only demo)
+  const form = document.getElementById('reserveForm');
+  const msg = document.getElementById('formMsg');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    msg.textContent = `Thanks, ${name.split(' ')[0]} — we've noted your request for ${date} at ${time}. We'll confirm by phone shortly.`;
+    form.reset();
+  });
+
+  // Set min date to today for the date picker
+  document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+  // Newsletter signup (front-end only demo)
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterMsg = document.getElementById('newsletterMsg');
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const first = document.getElementById('nl-first').value;
+    newsletterMsg.textContent = `Thanks, ${first} — you're on the list.`;
+    newsletterForm.reset();
+  });
+
+  // Contact form (front-end only demo)
+  const contactForm = document.getElementById('contactForm');
+  const contactMsg = document.getElementById('contactMsg');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('c-name').value;
+    contactMsg.textContent = `Thanks, ${name.split(' ')[0]} — we've received your message and will get back to you soon.`;
+    contactForm.reset();
+  });
+</script>
+
+</body>
+</html>
